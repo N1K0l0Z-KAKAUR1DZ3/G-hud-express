@@ -1,4 +1,4 @@
-from  Demo_Project.NikaBackEnd import create_app
+from  Demo_Project import create_app
 
 app = create_app()
 
