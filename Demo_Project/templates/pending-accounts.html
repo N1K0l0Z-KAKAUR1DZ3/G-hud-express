@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_field %}
+
+
+
+{% block content %}
+  <h1>Pending Accounts</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Date Joined</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.email }}</td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.number }}</td>
+          <td>{{ user.date_created.strftime('%Y-%m-%d') }}</td>
+          <td>
+            <form action="{{ url_for('views.approve_user', user_id=user.id) }}" method="post" style="display: inline;">
+                {{ csrf_token() }}
+                <button type="submit" class="btn btn-success">Approve</button>
+              </form>
+              <form action="{{ url_for('views.reject_user', user_id=user.id) }}" method="post" style="display: inline;">
+                {{ csrf_token() }}
+                <button type="submit" class="btn btn-danger">Reject</button>
+              </form>
+              
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+<style>
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  th {
+    background-color: #4CAF50;
+    color: white;
+  }
+</style>
